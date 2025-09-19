@@ -1,0 +1,177 @@
+"use client";
+
+import Image from "next/image";
+import { useState, useEffect } from "react";
+
+export default function Home() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleHover = () => setIsHovered(true);
+  const handleLeave = () => setIsHovered(false);
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Effekt, der die Abschnitte nach dem Scrollen einblendet
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('.fade-in');
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight - 100) {
+          section.classList.add('fade-in-visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call it once to show sections already visible
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-black text-white font-sans">
+      {/* HERO SECTION */}
+      <header className="relative flex flex-col items-center justify-center text-center py-32 bg-gradient-to-b from-gray-900 to-black fade-in" style={{ backgroundImage: "url('/jasonleung.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url('/jasonleung.jpg')" }}></div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-white transition-all duration-700 ease-in-out transform hover:scale-105 hover:text-blue-500">
+            IT-Lösungen, die Ihr Unternehmen revolutionieren
+          </h1>
+          <p className="mt-6 text-lg sm:text-xl max-w-2xl mx-auto opacity-80">
+            Als Kaufmann für IT-Systemmanagement bringe ich Ihre IT auf das nächste Level – maßgeschneiderte Lösungen für die Zukunft Ihres Unternehmens.
+          </p>
+          <div className="mt-10 flex gap-6 justify-center">
+            <a
+              href="#leistungen"
+              className={`px-8 py-4 rounded-full bg-transparent border-2 border-white text-white font-semibold transition-all duration-300 transform ${isHovered ? 'scale-110' : 'scale-100'}`}
+              onMouseEnter={handleHover}
+              onMouseLeave={handleLeave}
+            >
+              Meine Expertise
+            </a>
+            <a
+              href="#kontakt"
+              className={`px-8 py-4 rounded-full bg-white text-black font-semibold transition-all duration-300 transform ${isHovered ? 'scale-110' : 'scale-100'}`}
+              onMouseEnter={handleHover}
+              onMouseLeave={handleLeave}
+            >
+              Kontaktieren Sie mich
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* USP (Unique Selling Proposition) */}
+      <section className="py-32 px-6 bg-gray-900 text-center fade-in">
+        <h2 className="text-4xl sm:text-5xl font-bold text-white mb-12">
+          Warum mit mir zusammenarbeiten?
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="p-8 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
+            <h3 className="text-2xl font-semibold text-white mb-4">Erfahrung & Expertise</h3>
+            <p className="text-gray-400">
+              Über [X Jahre] Erfahrung in der IT- und Systemintegration. Ich kenne die Herausforderungen der Branche und biete bewährte Lösungen.
+            </p>
+          </div>
+          <div className="p-8 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
+            <h3 className="text-2xl font-semibold text-white mb-4">Maßgeschneiderte Lösungen</h3>
+            <p className="text-gray-400">
+              Jedes Unternehmen ist einzigartig. Ich entwickle maßgeschneiderte IT-Lösungen, die perfekt zu Ihren individuellen Anforderungen passen.
+            </p>
+          </div>
+          <div className="p-8 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
+            <h3 className="text-2xl font-semibold text-white mb-4">Zukunftssicherheit</h3>
+            <p className="text-gray-400">
+              Durch nachhaltige Technologien stelle ich sicher, dass Ihre IT-Infrastruktur auch in Zukunft effizient und skalierbar bleibt.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-32 px-6 bg-black text-white text-center fade-in">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-12">
+          Was Kunden über mich sagen
+        </h2>
+        <div className="space-y-8">
+          <div className="p-8 bg-gray-800 rounded-xl shadow-lg">
+            <p className="text-xl font-semibold mb-4">„Die Zusammenarbeit mit Mohamad hat unsere IT-Infrastruktur auf das nächste Level gebracht. Wir können uns nun auf das Wesentliche konzentrieren, während die Systeme zuverlässig laufen.“</p>
+            <p className="text-gray-400">– Max Müller, Geschäftsführer, XYZ GmbH</p>
+          </div>
+          <div className="p-8 bg-gray-800 rounded-xl shadow-lg">
+            <p className="text-xl font-semibold mb-4">„Dank Mohamads Beratung konnten wir erhebliche Kosten einsparen und gleichzeitig die Effizienz steigern. Ein echter Gewinn für unser Unternehmen.“</p>
+            <p className="text-gray-400">– Anna Schmitt, CTO, ABC GmbH</p>
+          </div>
+        </div>
+      </section>
+
+      {/* LEISTUNGEN */}
+      <main className="flex-1 px-6 sm:px-12 py-32 bg-gray-900" id="leistungen">
+        <h2 className="text-4xl sm:text-5xl font-bold text-center text-white mb-12">
+          Meine Leistungen für Ihr Unternehmen
+        </h2>
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="p-10 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 fade-in">
+            <Image
+              src="/icons/consulting.svg"
+              alt="Beratung"
+              width={60}
+              height={60}
+              className="mb-6"
+            />
+            <h3 className="text-2xl font-semibold text-white mb-4">IT-Beratung</h3>
+            <p className="text-gray-400">
+              Strategische Beratung für nachhaltige IT-Entwicklung und Digitalisierung.
+            </p>
+          </div>
+          <div className="p-10 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 fade-in">
+            <Image
+              src="/icons/integration.svg"
+              alt="Systemintegration"
+              width={60}
+              height={60}
+              className="mb-6"
+            />
+            <h3 className="text-2xl font-semibold text-white mb-4">Systemintegration</h3>
+            <p className="text-gray-400">
+              Optimierung und Integration von IT-Systemen, maßgeschneidert auf Ihr Unternehmen.
+            </p>
+          </div>
+          <div className="p-10 bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 fade-in">
+            <Image
+              src="/icons/automation.svg"
+              alt="Automatisierung"
+              width={60}
+              height={60}
+              className="mb-6"
+            />
+            <h3 className="text-2xl font-semibold text-white mb-4">Automatisierung</h3>
+            <p className="text-gray-400">
+              Effiziente Prozessautomatisierung, um Ihre Geschäftsabläufe zu optimieren.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {/* KONTAKT SECTION */}
+      <section id="kontakt" className="bg-black text-white py-32">
+        <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">Kontaktieren Sie mich</h2>
+        <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-6">
+          Ich freue mich darauf, mit Ihnen zusammenzuarbeiten. Kontaktieren Sie mich noch heute für maßgeschneiderte IT-Lösungen.
+        </p>
+        <a
+          href="mailto:info@mohamadfawaz.de"
+          className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
+        >
+          Jetzt E-Mail senden
+        </a>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12 text-center text-gray-400 bg-gray-900">
+        <p>© {new Date().getFullYear()} Mohamad Fawaz. Alle Rechte vorbehalten.</p>
+      </footer>
+    </div>
+  );
+}
+
